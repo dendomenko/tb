@@ -1,5 +1,11 @@
 class CargoTrain < Train
-  def print
-    puts "Number: #{@id} | Type: Cargo"
+  def initialize(id)
+    super id
+  end
+
+  def printer
+    super
+    puts '| type: cargo'
+    carriages
   end
 end

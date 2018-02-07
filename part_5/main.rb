@@ -1,6 +1,21 @@
 def menu
-  stations = []
-  trains = []
+  stations = [Station.new('Kharkiv'), Station.new('Kyiv'), Station.new('Dnepr')]
+  trains = [
+    PassengerTrain.new('KKD'),
+    PassengerTrain.new('DKK-12'),
+    CargoTrain.new('KDK-22')
+  ]
+
+  trains.each do |train|
+    train.add_carriage(rand(15..35))
+    train.add_carriage(rand(15..35))
+    train.add_carriage(rand(15..35))
+  end
+
+  stations.each_with_index do |station, index|
+    station.train_arrive trains[index]  
+  end
+  
   loop do
     menu_points
     choice = gets.chomp
@@ -62,20 +77,6 @@ rescue RuntimeError
   retry
 end
 
-def add_carriage(trains)
-  if trains.size.zero?
-    puts 'You should create trains first'
-  else
-    trains.each_with_index do |train, index|
-      print "#{index}. "
-      train.print
-    end
-    puts 'Enter train index to add carriage:'
-    index = gets.chomp.to_i
-    trains[index].add_carriage unless trains[index].nil?
-  end
-end
-
 def check_trains(trains)
   trains.size.zero?
 end
@@ -87,7 +88,10 @@ def add_carriage(trains)
     printer trains
     puts 'Enter train index to add carriage:'
     index = gets.chomp.to_i
-    trains[index].add_carriage unless trains[index].nil?
+    puts 'Enter volume for cargo train' \
+         'or seats for passenger train'
+    carriage_data = gets.chomp.to_i
+    trains[index].add_carriage(carriage_data) unless trains[index].nil?
   end
 end
 
@@ -116,7 +120,7 @@ end
 def printer(objects)
   objects.each_with_index do |object, index|
     print "#{index}. "
-    object.print
+    object.printer
   end
 end
 
