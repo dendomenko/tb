@@ -17,6 +17,7 @@ class PassengerCarriage < Carriage
 
   def printer
     super
-    puts "type: #{@type}, free seats: #{free_seats}, taken seats: #{taken_seats}"
+    puts "type: #{@type}, free seats: #{free_seats}," /
+         "taken seats: #{taken_seats}"
   end
 end
