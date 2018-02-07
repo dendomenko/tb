@@ -93,8 +93,8 @@ class Train
 
   def validate!
     raise "Name can't be nil" if id.nil?
-    raise 'Name should be at least 3' \
-          'symbols and not more than 5' if id.length < 3 || id.length > 6
+    raise 'Name should be > 3 symbols and < 5' if id.length < 3 ||
+                                                  id.length > 6
     raise 'Name has invalid format' if id !~ NAME_PATTERN
     true
   end

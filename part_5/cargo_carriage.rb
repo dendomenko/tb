@@ -17,6 +17,7 @@ class CargoCarriage < Carriage
 
   def printer
     super
-    puts "type: #{@type}, free volumr: #{free_volume}, occupied volume: #{occupied_volume}"
+    puts "type: #{@type}, free volumr: #{free_volume}," /
+         " occupied volume: #{occupied_volume}"
   end
 end

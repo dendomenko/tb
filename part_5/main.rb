@@ -13,9 +13,9 @@ def menu
   end
 
   stations.each_with_index do |station, index|
-    station.train_arrive trains[index]  
+    station.train_arrive trains[index]
   end
-  
+
   loop do
     menu_points
     choice = gets.chomp
@@ -82,17 +82,14 @@ def check_trains(trains)
 end
 
 def add_carriage(trains)
-  if check_trains trains
-    puts 'You should create trains first'
-  else
-    printer trains
-    puts 'Enter train index to add carriage:'
-    index = gets.chomp.to_i
-    puts 'Enter volume for cargo train' \
-         'or seats for passenger train'
-    carriage_data = gets.chomp.to_i
-    trains[index].add_carriage(carriage_data) unless trains[index].nil?
-  end
+  return 'You should create trains first' if check_trains trains
+  printer trains
+  puts 'Enter train index to add carriage:'
+  index = gets.chomp.to_i
+  puts 'Enter volume for cargo train' \
+        'or seats for passenger train'
+  carriage_data = gets.chomp.to_i
+  trains[index].add_carriage(carriage_data) unless trains[index].nil?
 end
 
 def remove_carriage(trains)
@@ -107,14 +104,18 @@ def remove_carriage(trains)
 end
 
 def add_train_to_station(trains, stations)
-  printer trains
-  puts 'Enter train index'
-  t_index = gets.chomp.to_i
+  t_i = choose_train
   puts 'Enter station index'
   printer stations
-  s_index = gets.chomp.to_i
-  stations[s_index].train_arrive trains[t_index] unless stations[s_index].nil? ||
-                                                        trains[t_index].nil?
+  s_i = gets.chomp.to_i
+  stations[s_i].train_arrive trains[t_i] unless stations[s_i].nil? ||
+                                                trains[t_i].nil?
+end
+
+def choose_train
+  printer trains
+  puts 'Enter train index'
+  gets.chomp.to_i
 end
 
 def printer(objects)
@@ -125,7 +126,5 @@ def printer(objects)
 end
 
 def print_stations(stations)
-  stations.each do |station|
-    station.trains
-  end
+  stations.each(&:trains)
 end
