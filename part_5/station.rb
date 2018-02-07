@@ -24,7 +24,13 @@ class Station
 
   def trains
     puts "Trains on this station: #{@name}"
-    @trains.each(&:print)
+    if block_given?
+      @trains.each do |train|
+        yield train
+      end
+    else
+      @trains.each(&:print)
+    end
   end
 
   def trains_by_type(type = 'passenger_train')
@@ -36,7 +42,7 @@ class Station
   def print
     puts "Name: #{@name}"
   end
-  
+
   def valid?
     validate!
   rescue RuntimeError
