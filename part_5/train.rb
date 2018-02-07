@@ -1,7 +1,7 @@
 class Train
-  attr_reader  :carriage_number, :station_index
+  attr_reader :id, :carriage_number, :station_index
   attr_writer :route
-  attr_accessor :speed, :id
+  attr_accessor :speed
 
   include Manufacturer
   include InstanceCounter
@@ -59,6 +59,17 @@ class Train
 
   def go_to_next_station
     @station_index += 1
+  end
+
+  def carriages
+    puts "Carriages on this train: #{@id}"
+    if block_given?
+      @carriages.each do |carriage|
+        yield carriage
+      end
+    else
+      @carriages.each(&:print)
+    end
   end
 
   def remove_carriage
