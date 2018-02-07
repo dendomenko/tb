@@ -18,7 +18,6 @@ class Train
     register_instance
     validate!
     @@instances.push self
-    print
   end
 
   def self.find(id)
@@ -35,8 +34,6 @@ class Train
     false
   end
 
-  protected
-
   def speed_rise
     @speed += 10
   end
@@ -46,15 +43,15 @@ class Train
   end
 
   def current_station
-    @route.stations[@station_index].print
+    @route.stations[@station_index].printer
   end
 
   def next_station
-    @route.stations[@station_index + 1].print
+    @route.stations[@station_index + 1].printer
   end
 
   def prev_station
-    @route.stations[@station_index - 1].print
+    @route.stations[@station_index - 1].printer
   end
 
   def go_to_next_station
@@ -68,7 +65,7 @@ class Train
         yield carriage
       end
     else
-      @carriages.each(&:print)
+      @carriages.each(&:printer)
     end
   end
 
@@ -78,15 +75,21 @@ class Train
     @carriages.pop
   end
 
-  def add_carriage
+  def add_carriage(data)
     return 'Stop the train before adding carriage!' unless @speed.zero?
-    case self.class
+    case self.class.to_s
     when 'PassengerTrain'
-      @carriages.push PassengerCarriage.new
+      @carriages.push PassengerCarriage.new(data, @carriages.size + 1)
     when 'CargoTrain'
-      @carriages.push CargoCarriage.new
+      @carriages.push CargoCarriage.new(data, @carriages.size + 1)
     end
   end
+
+  def printer
+    print "Number: #{@id} | Carriages: #{@carriages.size}"
+  end
+
+  protected
 
   def validate!
     raise "Name can't be nil" if id.nil?

@@ -1,6 +1,7 @@
 class CargoCarriage < Carriage
   attr_reader :occupied_volume
-  def initialize(volume)
+  def initialize(volume, number)
+    super number
     @volume = volume
     @occupied_volume = 0
     @type = 'cargo'
@@ -12,5 +13,10 @@ class CargoCarriage < Carriage
 
   def free_volume
     @volume - occupied_volume
+  end
+
+  def printer
+    super
+    puts "type: #{@type}, free volumr: #{free_volume}, occupied volume: #{occupied_volume}"
   end
 end

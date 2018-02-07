@@ -7,11 +7,11 @@ class Station
     @trains = []
     validate!
     @@instances.push self
-    print
+    printer
   end
 
   def self.all
-    @@instances.each(&:print)
+    @@instances.each(&:printer)
   end
 
   def train_arrive(train)
@@ -29,7 +29,7 @@ class Station
         yield train
       end
     else
-      @trains.each(&:print)
+      @trains.each(&:printer)
     end
   end
 
@@ -39,7 +39,7 @@ class Station
     end
   end
 
-  def print
+  def printer
     puts "Name: #{@name}"
   end
 
