@@ -1,5 +1,10 @@
 class Station
+  extend Accessors
+
   attr_reader :name
+  attr_accessor_with_history :test
+  strong_attr_acessor :test2, String
+
   @@instances = []
 
   def initialize(name)
