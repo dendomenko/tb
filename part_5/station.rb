@@ -1,5 +1,9 @@
 class Station
   extend Accessors
+  include Validation
+
+  validate :name, :presence
+  validate :name, :type, String
 
   attr_reader :name
   attr_accessor_with_history :test
@@ -10,7 +14,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    validate!
+    # validate!
     @@instances.push self
     printer
   end
@@ -46,19 +50,5 @@ class Station
 
   def printer
     puts "Name: #{@name}"
-  end
-
-  def valid?
-    validate!
-  rescue RuntimeError
-    false
-  end
-
-  private
-
-  def validate!
-    raise "Name can't be nil" if name.nil?
-    raise 'Name should be at least 3 symbols' if name.length < 3
-    true
   end
 end
