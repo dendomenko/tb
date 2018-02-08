@@ -5,10 +5,11 @@ class Train
 
   include Manufacturer
   include InstanceCounter
+  include Validation
 
   @@instances = []
 
-  NAME_PATTERN = /^(([a-z]|\d){3})(-{1}([a-z]|\d){2})?$/i
+  validate :id, :format, /^(([a-z]|\d){3})(-{1}([a-z]|\d){2})?$/i
 
   def initialize(id)
     @speed = 0
@@ -87,15 +88,5 @@ class Train
 
   def printer
     print "Number: #{@id} | Carriages: #{@carriages.size}"
-  end
-
-  protected
-
-  def validate!
-    raise "Name can't be nil" if id.nil?
-    raise 'Name should be > 3 symbols and < 5' if id.length < 3 ||
-                                                  id.length > 6
-    raise 'Name has invalid format' if id !~ NAME_PATTERN
-    true
   end
 end
