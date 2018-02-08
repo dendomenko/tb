@@ -1,13 +1,13 @@
 class Station
-  extend Accessors
+  # extend Accessors
   include Validation
 
-  validate :name, :presence
-  validate :name, :type, String
+  validate :name, :presence, msg: 'test presence'
+  validate :name, :type, param: String, msg: 'test type'
 
   attr_reader :name
-  attr_accessor_with_history :test
-  strong_attr_acessor :test2, String
+  # attr_accessor_with_history :test
+  # strong_attr_acessor :test2, String
 
   @@instances = []
 
